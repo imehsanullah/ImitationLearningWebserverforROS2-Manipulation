@@ -1,10 +1,23 @@
 # Imitation Learning Pipeline for Teleoperated Robotic Manipulation in a ROS2 Webserver Platform
 
-Letting an operator teleoperate a manipulator from the browser, record demonstrations, convert them into a structured dataset, train a behavior-cloning policy, and deploy that policy back into the ROS2 control loop.
+Details of manipulation-focused imitation learning pipeline by connecting browser teleoperation, ROS2 robot control, Gazebo simulation, dataset collection, behavior cloning training, and policy deployment through a webserver interface.
+
 
 ## Targeted imitation learning task
 
 The targeted task is teleoperated pick-and-place style manipulation in simulation. The system records robot observations, such as joint state, gripper state, end-effector pose, and object pose, together with operator actions, then trains a behavior-cloning policy to predict the next safe manipulation command through the ROS2 control loop.
+
+## Imitation learning pipeline
+
+```text
+Teleoperate robot from Web UI
+-> Record observations and actions
+-> Store demonstration episodes
+-> Build training dataset
+-> Train behavior cloning policy
+-> Load policy checkpoint
+-> Run policy through the ROS2 control loop
+```
 
 ## Architecture diagram
 
@@ -21,6 +34,54 @@ For this prototype, I targeted and tested three robot arms:
 - FR3
 - UR5e
 - xArm7
+
+
+
+## Technical stack
+
+- **Frontend:** Web UI with a robot-agnostic Three.js visualizer
+- **Middleware:** ROS2 topics, services, actions, and rosbridge/WebSocket communication
+- **Simulation:** Gazebo for robot motion, scene physics, and repeatable testing
+- **Planning and validation:** MoveIt2 planning scene and state-validity checks
+- **Control:** ROS2 controllers for joint trajectory and gripper execution
+- **Learning:** behavior cloning from recorded observation-action demonstrations
+
+## Dataset format
+
+Each episode is stored as a time-indexed sequence of observation-action samples. 
+
+```json
+{
+  "episode_id": "episode_000001",
+  "robot_name": "ur5e",
+  "task_name": "cube_pick",
+  "source": "teleop",
+  "success": true,
+  "samples": [
+    {
+      "timestamp": 0.05,
+      "observation": {
+        "joint_position": [],
+        "joint_velocity": [],
+        "gripper_position": [],
+        "ee_pose": [],
+        "object_pose": []
+      },
+      "action": {
+        "joint_position_target": [],
+        "joint_delta": [],
+        "gripper_command": []
+      }
+    }
+  ]
+}
+```
+
+## Safety and validation
+
+Commands from both teleoperation and policy execution are checked before reaching the controllers. The validation layer can reject unsafe commands using joint limits, velocity limits, stale-state checks, MoveIt2 collision/state-validity checks, and emergency stop or policy pause handling.
+
+
 
 ### Browser robot demos
 
@@ -50,3 +111,10 @@ The operator sends teleoperation commands directly from the webserver UI. The fr
 In addition to manual teleoperation, demonstration data can also be generated from the backend. This is useful for quickly creating repeatable sample episodes for testing dataset conversion, training, and policy deployment without manually recording every run.
 
 ![Backend-generated demonstration](docs/backend-generated.gif)
+
+
+## Future work
+
+- Clean the actual pipeline code for a public GitHub release.
+- Improve the current behavior cloning approach with a stronger policy model and better evaluation.
+- Extend the learning pipeline toward reinforcement learning in simulation.
