@@ -93,11 +93,6 @@ The same Three.js visualizer and Web UI flow were tested with FR3, UR5e, and xAr
 
 ![xArm7 browser demo](docs/xarm7-browser-demo.gif)
 
-### Gazebo and Three.js frontend synchronization
-
-This demo shows that the browser visualizer is synchronized with the actual Gazebo simulation. The robot motion is simulated in Gazebo, published through ROS2, and mirrored in the Three.js frontend through the web-to-ROS bridge.
-
-![Gazebo and Three.js frontend synchronization](docs/gazebo-threejs-frontend-syncup.gif)
 
 ## Web UI
 
@@ -109,6 +104,12 @@ The Web UI exposes the main imitation-learning workflow through four panels:
 - **Dataset:** inspect collected episodes, sample counts, success rate, and whether data came from teleoperation or backend generation.
 - **Training:** trigger behavior-cloning training from the collected dataset and monitor training/validation loss.
 - **Deployment:** load a trained checkpoint, run or pause the policy, and monitor whether the policy runtime is loaded.
+
+### Gazebo and Three.js frontend synchronization
+
+The browser visualizer is synchronized with the actual Gazebo simulation. The robot motion is simulated in Gazebo, published through ROS2, and mirrored in the Three.js frontend through the web-to-ROS bridge.
+
+![Gazebo and Three.js frontend synchronization](docs/gazebo-threejs-frontend-syncup.gif)
 
 ### Sending teleoperation from the webserver
 
