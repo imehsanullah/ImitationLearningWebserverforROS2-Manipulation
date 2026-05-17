@@ -12,23 +12,15 @@ The targeted task is teleoperated pick-and-place style manipulation in simulatio
 
 *Click the diagram to open the editable Figma file.*
 
-The web frontend includes a robot-agnostic Three.js robot visualizer integrated directly into the Web UI. It displays the selected robot, scene, trajectories, and live state feedback in the browser while sharing the same interface used for teleoperation, recording demonstrations, dataset inspection, training, policy deployment, and monitoring. Three.js is only the visualization layer: the actual robot state comes from ROS2 topics exposed through the web-to-ROS bridge, and those states are produced by the Gazebo simulation.
+The web UI is robot-agnostic: Three.js only renders the arm, scene, and trajectories, while joint and object state arrive over the web-to-ROS bridge from Gazebo. The same screen supports teleoperation, demonstration recording, dataset inspection, training, and deployment; swapping arms is mostly configuration (robot description, joint names, controller topics, gripper, and visualization assets).
 
-MoveIt2 is used for manipulation-aware planning and validation. It provides the planning scene and state-validity checks needed to reject unsafe or infeasible teleoperation and policy commands before they reach the robot controllers.
-
-## Robot-agnostic Three.js robot visualizer
-
-The solution is designed around a robot-agnostic webserver and Three.js robot visualizer rather than a UI hardcoded for a single arm. The frontend receives a robot description, joint names, controller topics, gripper configuration, and visualization assets, then uses the same browser controls and Three.js scene to operate different manipulators through ROS2.
-
-In the Web UI, the visualizer is paired with teleoperation controls so the operator can move the arm from the browser and immediately see the simulated robot response. The same interaction loop is also used during demonstration recording: user commands are sent through the ROS2 bridge, validated by the backend, executed in Gazebo through ROS2 controllers, and streamed back to the Three.js view as updated joint states and scene feedback.
+MoveIt2 provides the planning scene and state-validity checks so unsafe or infeasible teleoperation and policy commands are rejected before they reach the controllers.
 
 For this prototype, I targeted and tested three robot arms:
 
 - FR3
 - UR5e
 - xArm7
-
-The same webserver flow is used for all three: browser teleoperation, Three.js visualization, ROS2 bridge communication, Gazebo simulation, MoveIt2 validation, controller execution, and feedback streaming back to the UI. Extending the platform to another manipulator should only require small configuration changes, such as adding the robot model, joint list, controller topics, MoveIt2 planning group, gripper interface, and visualization assets.
 
 ### Browser robot demos
 
