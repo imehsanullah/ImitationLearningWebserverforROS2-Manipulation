@@ -83,7 +83,7 @@ Commands from both teleoperation and policy execution are checked before reachin
 
 
 
-### Browser robot demos
+## Robot-agnostic Three.js visualizer demos
 
 ![FR3 browser demo](docs/fr3-browser-demo.gif)
 
