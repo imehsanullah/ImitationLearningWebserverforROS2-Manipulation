@@ -85,11 +85,19 @@ Commands from both teleoperation and policy execution are checked before reachin
 
 ## Robot-agnostic Three.js visualizer demos
 
+The same Three.js visualizer and Web UI flow were tested with FR3, UR5e, and xArm7. The robot model, joint names, controller topics, and visualization assets are configurable, so the frontend is not tied to one specific arm.
+
 ![FR3 browser demo](docs/fr3-browser-demo.gif)
 
 ![UR5e browser demo](docs/ur5e-browser-demo.gif)
 
 ![xArm7 browser demo](docs/xarm7-browser-demo.gif)
+
+### Gazebo and Three.js frontend synchronization
+
+This demo shows that the browser visualizer is synchronized with the actual Gazebo simulation. The robot motion is simulated in Gazebo, published through ROS2, and mirrored in the Three.js frontend through the web-to-ROS bridge.
+
+![Gazebo and Three.js frontend synchronization](docs/gazebo-threejs-frontend-syncup.gif)
 
 ## Web UI
 
