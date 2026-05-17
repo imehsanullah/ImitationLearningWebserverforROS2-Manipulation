@@ -122,6 +122,10 @@ In addition to manual teleoperation, demonstration data can also be generated fr
 ![Backend-generated demonstration](docs/backend-generated.gif)
 
 
+## Training and deployment
+
+The collected demonstrations are used to train a behavior-cloning policy that maps the current robot observation to the next manipulation command. After training, the checkpoint can be loaded from the Web UI and executed through the ROS2 policy node. Policy commands pass through the same validation layer as teleoperation commands before reaching the robot controllers, so deployment remains connected to monitoring, safety checks, and the Gazebo simulation feedback loop.
+
 ## Future work
 
 - Clean the actual pipeline code for a public GitHub release.
