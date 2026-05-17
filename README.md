@@ -34,6 +34,13 @@ For this prototype, I targeted and tested three robot arms:
 
 ![Web UI — ROS2 webserver platform](docs/web-ui.png)
 
+The Web UI exposes the main imitation-learning workflow through four panels:
+
+- **Recording:** select the task, choose teleoperation or backend-generated mode, reset the cube pose, and start/mark demonstration episodes.
+- **Dataset:** inspect collected episodes, sample counts, success rate, and whether data came from teleoperation or backend generation.
+- **Training:** trigger behavior-cloning training from the collected dataset and monitor training/validation loss.
+- **Deployment:** load a trained checkpoint, run or pause the policy, and monitor whether the policy runtime is loaded.
+
 ### Sending teleoperation from the webserver
 
 The operator sends teleoperation commands directly from the webserver UI. The frontend publishes the command through the ROS2 bridge, while the actual physics, robot motion, joint updates, and scene feedback come from the Gazebo simulation and ROS2 controllers.
